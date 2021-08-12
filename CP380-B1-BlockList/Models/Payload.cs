@@ -6,8 +6,19 @@ namespace CP380_B1_BlockList.Models
         BUY, SELL, GRANT
     }
 
-    public class Payload
+     public class Payload
     {
-        // TODO
-    }
+        public string User { get; set; }
+        public TransactionTypes TransactionType { get; set; }
+        public int Amount  { get; set; }
+        public string Item { get; set; }
+
+        public Payload(string user, TransactionTypes transactionType, int amount, string item)
+        {
+            this.user = user;
+            this.transactionType = transactionType;
+            this.amount = amount;
+            this.item = item;
+        }
+}
 }
