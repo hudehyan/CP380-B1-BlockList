@@ -31,22 +31,22 @@ namespace CP380_B1_BlockList.Models
         public string CalculateHash()
         {
             var sha256 = SHA256.Create();
-            var json = JsonSerializer.Serialize(Data);
-
-            //
-            // TODO
-            //
-            var inputString = $""; // TODO
-
-            var inputBytes = Encoding.ASCII.GetBytes(inputString);
+            
+            var inputBytes = Encoding.ASCII.GetBytes($"{TimeStamp}-{PreviousHash ?? ""}-{Data}-{Nonce}");
             var outputBytes = sha256.ComputeHash(inputBytes);
 
-            return Base64UrlEncoder.Encode(outputBytes);
+            return Convert.ToBase64String(outputBytes);
         }
 
         public void Mine(int difficulty)
         {
             // TODO
+             var leadingZeros = new string('C', difficulty);
+            while (this.Hash == null || this.Hash.Substring(0, difficulty) != leadingZeros)
+            {
+                this.Nonce++;
+                this.Hash = this.CalculateHash();
+            }
         }
     }
 }
